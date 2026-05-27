@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support – Device Tracker</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #1c1c1e;
+      background: #ffffff;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #000000;
+    }
+
+    .meta {
+      font-size: 14px;
+      color: #6e6e73;
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      color: #000000;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f4f6ff;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 6px;
+      color: #1c1c1e;
+    }
+
+    p { margin-bottom: 14px; }
+
+    ul, ol {
+      margin: 0 0 14px 20px;
+    }
+
+    ul li, ol li { margin-bottom: 6px; }
+
+    a { color: #4F6BFF; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Contact card */
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #f4f6ff;
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin: 28px 0 36px;
+    }
+
+    .contact-icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      background: #4F6BFF;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: #ffffff;
+    }
+
+    .contact-text { flex: 1; }
+
+    .contact-text strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+
+    .contact-text a {
+      font-size: 15px;
+    }
+
+    /* FAQ accordion-style items */
+    .faq-item {
+      border: 1px solid #ebebeb;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .faq-q {
+      width: 100%;
+      background: #ffffff;
+      border: none;
+      text-align: left;
+      padding: 16px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1c1c1e;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-family: inherit;
+      line-height: 1.4;
+    }
+
+    .faq-q:hover { background: #f9f9fb; }
+
+    .faq-q .arrow {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #f4f6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+
+    .faq-q .arrow svg {
+      width: 10px;
+      height: 10px;
+      fill: #4F6BFF;
+      transition: transform 0.2s ease;
+    }
+
+    .faq-item.open .faq-q .arrow svg {
+      transform: rotate(180deg);
+    }
+
+    .faq-a {
+      display: none;
+      padding: 0 20px 16px;
+      font-size: 15px;
+      color: #3a3a3c;
+      border-top: 1px solid #f4f6ff;
+    }
+
+    .faq-a p:last-child { margin-bottom: 0; }
+
+    .faq-item.open .faq-a { display: block; }
+
+    /* Step blocks */
+    .steps {
+      counter-reset: step-counter;
+      list-style: none;
+      margin: 0 0 14px 0;
+    }
+
+    .steps li {
+      counter-increment: step-counter;
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+      align-items: flex-start;
+    }
+
+    .steps li::before {
+      content: counter(step-counter);
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      background: #4F6BFF;
+      color: #ffffff;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    /* Info / tip box */
+    .tip-box {
+      background: #f4f6ff;
+      border-left: 4px solid #4F6BFF;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin: 12px 0 14px;
+      font-size: 15px;
+    }
+
+    .tip-box strong { color: #4F6BFF; }
+
+    /* Policy links row */
+    .policy-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .policy-links a {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #f4f6ff;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid #ebebeb;
+      font-size: 14px;
+      color: #6e6e73;
+    }
+
+    @media (max-width: 500px) {
+      .contact-card { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────── -->
+  <h1>Support</h1>
+  <p class="meta">Device Tracker &nbsp;·&nbsp; iOS App</p>
+
+  <p>
+    Having trouble with Device Tracker? Browse the topics below or reach out to us directly
+    — we're happy to help.
+  </p>
+
+  <!-- ── Contact card ───────────────────────────────────── -->
+  <div class="contact-card">
+    <div class="contact-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0
+                 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5
+                 8-5v2z"/>
+      </svg>
+    </div>
+    <div class="contact-text">
+      <strong>Email Support</strong>
+      <a href="mailto:vladyslavhasiuk@gmail.com">vladyslavhasiuk@gmail.com</a>
+      <p style="font-size:13px; color:#6e6e73; margin:4px 0 0;">
+        We respond within 1–2 business days.
+      </p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <h2>Getting Started</h2>
+
+  <h3>How does Device Tracker work?</h3>
+  <p>
+    Device Tracker uses your iPhone's Bluetooth hardware to detect nearby Bluetooth Low
+    Energy (BLE) devices. After a scan it displays all discovered devices with an estimated
+    distance and signal strength. You can save devices to "My Devices" for quick re-scanning,
+    and set up notifications to alert you when a saved device comes into or goes out of range.
+  </p>
+
+  <h3>First-time setup</h3>
+  <ol class="steps">
+    <li>Open Device Tracker and tap the large Bluetooth button on the main screen to start a scan.</li>
+    <li>When prompted, tap <strong>Allow</strong> to grant Bluetooth access — the app cannot
+        function without it.</li>
+    <li>After the scan completes, all nearby BLE devices appear in the list.</li>
+    <li>Tap a device to open its detail view (premium feature), then tap
+        <strong>Found it</strong> to open its settings.</li>
+    <li>Toggle <strong>Add to My Devices</strong> to save it for future scans.</li>
+  </ol>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <h2>Frequently Asked Questions</h2>
+
+  <!-- Q1 -->
+  <div class="faq-item open">
+    <button class="faq-q" onclick="toggle(this)">
+      No devices are appearing after a scan — what should I check?
+      <span class="arrow">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#4F6BFF"
+             stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+    <div class="faq-a">
+      <p>A few things to check:</p>
+      <ul>
+        <li><strong>Bluetooth permission:</strong> Go to <em>Settings → Privacy &amp;
+            Security → Bluetooth</em> and make sure Device Tracker is enabled.</li>
+        <li><strong>Bluetooth is on:</strong> Open Control Centre and confirm Bluetooth is
+            active (not just "nearby" mode).</li>
+        <li><strong>Real device required:</strong> Bluetooth scanning does not work in the
+            iOS Simulator — always test on a physical iPhone.</li>
+        <li><strong>Device must be advertising:</strong> Not all Bluetooth devices broadcast
+            continuously. Keyboards, headphones, and speakers typically advertise only when
+            in pairing mode or actively connected.</li>
+        <li><strong>Move closer:</strong> Try scanning within 5–10 metres of the target
+            device.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      The distance reading seems inaccurate. Is that normal?
+      <span class="arrow">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#4F6BFF"
+             stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+    <div class="faq-a">
+      <p>
+        Yes, this is expected behaviour. Distance is estimated from Bluetooth signal strength
+        (RSSI), which is affected by:
+      </p>
+      <ul>
+        <li>Walls, furniture, and other physical obstructions</li>
+        <li>Interference from other wireless devices (Wi-Fi, microwave ovens, etc.)</li>
+        <li>Differences in Bluetooth transmit power between device models</li>
+        <li>The orientation and position of both phones</li>
+      </ul>
+      <p>
+        For best results use the real-time signal strength percentage and the animated
+        indicator rather than the numerical distance alone — move steadily in one direction
+        and watch whether the signal increases or decreases.
+      </p>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      I'm not receiving "Found" or "Lost" notifications.
+      <span class="arrow">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#4F6BFF"
+             stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+    <div class="faq-a">
+      <p>Check each of the following in order:</p>
+      <ul>
+        <li><strong>Notification permission:</strong> Go to <em>Settings →
+            Notifications → Device Tracker</em> and ensure notifications are
+            <strong>Allow</strong>ed with banners and sounds enabled.</li>
+        <li><strong>Per-device toggles:</strong> Open the app, navigate to the device's
+            settings (tap the device → Found it), and confirm that
+            <em>Notify when Found</em> or <em>Notify when Lost</em> is switched on.</li>
+        <li><strong>Device must be saved:</strong> Notifications only fire for devices
+            added to "My Devices."</li>
+        <li><strong>Background app refresh:</strong> Go to <em>Settings → General →
+            Background App Refresh</em> and make sure Device Tracker is enabled.</li>
+        <li><strong>Focus / Do Not Disturb:</strong> Check that an active Focus mode is not
+            silencing notifications from Device Tracker.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      I tapped a device and saw the paywall instead of the detail screen.
+      <span class="arrow">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#4F6BFF"
+             stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+    <div class="faq-a">
+      <p>
+        The device detail screen is a premium feature. If you have already purchased a
+        subscription and are still seeing the paywall, try the following:
+      </p>
+      <ol class="steps">
+        <li>Tap <strong>Restore Purchase</strong> at the bottom of the paywall screen.</li>
+        <li>If that does not work, force-close the app (swipe up and off) and reopen it.</li>
+        <li>Ensure your iPhone has an active internet connection so the app can verify
+            your subscription.</li>
+        <li>If the issue persists, contact us at
+            <a href="mailto:vladyslavhasiuk@gmail.com">vladyslavhasiuk@gmail.com</a>
+            with your Apple ID email address and we will investigate.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      How do I start or manage my free trial?
+      <span class="arrow">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#4F6BFF"
+             stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+    <div class="faq-a">
+      <p>
+        A 3-day free trial is available on Weekly, Monthly, and Yearly plans for new
+        subscribers. To start a trial, tap any device in the list and choose a plan on
+        the subscription screen.
+      </p>
+      <div class="tip-box">
+        <strong>Reminder:</strong> If you do not cancel before the trial ends, your payment
+        method will be charged automatically. Cancel at least 24 hours before the trial
+        expires to avoid being billed.
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      How do I cancel my subscription?
+      <span class="arrow">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#4F6BFF"
+             stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+    <div class="faq-a">
+      <p>Subscriptions are managed through Apple. To cancel:</p>
+      <ol class="steps">
+        <li>Open the <strong>Settings</strong> app on your iPhone.</li>
+        <li>Tap your name at the top, then tap <strong>Subscriptions</strong>.</li>
+        <li>Select <strong>Device Tracker</strong>.</li>
+        <li>Tap <strong>Cancel Subscription</strong> and confirm.</li>
+      </ol>
+      <p>
+        You keep access to premium features until the end of the current billing period.
+        Cancellation takes effect at the next renewal date — you will not be charged again.
+      </p>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      How do I request a refund?
+      <span class="arrow">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#4F6BFF"
+             stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+    <div class="faq-a">
+      <p>
+        All billing is handled by Apple. Refund requests must be submitted directly to Apple:
+      </p>
+      <ul>
+        <li>Visit <a href="https://reportaproblem.apple.com" target="_blank"
+                     rel="noopener">reportaproblem.apple.com</a></li>
+        <li>Sign in with your Apple ID, find the Device Tracker purchase, and select
+            <strong>Request a Refund</strong>.</li>
+      </ul>
+      <p>
+        We do not have access to your payment details and cannot process refunds directly.
+      </p>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      I reinstalled the app — how do I restore my purchase?
+      <span class="arrow">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#4F6BFF"
+             stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+    <div class="faq-a">
+      <p>
+        Open Device Tracker, tap any device to reach the subscription screen, then tap
+        <strong>Restore Purchase</strong> at the bottom of the screen. Make sure you are
+        signed in to the same Apple ID that was used for the original purchase. Your premium
+        access will be reinstated at no additional charge.
+      </p>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      How do I change the language in the app?
+      <span class="arrow">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#4F6BFF"
+             stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+    <div class="faq-a">
+      <p>
+        Device Tracker supports 14 languages: English, Danish, German, Spanish, French,
+        Italian, Japanese, Korean, Norwegian, Dutch, Polish, Portuguese (Brazil), Swedish,
+        and Turkish.
+      </p>
+      <p>
+        To change the language, tap the <strong>settings gear</strong> icon in the app and
+        select <strong>Languages</strong>. The change takes effect immediately without
+        restarting the app.
+      </p>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      How do I switch between metres and feet?
+      <span class="arrow">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#4F6BFF"
+             stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+    <div class="faq-a">
+      <p>
+        Tap the <strong>settings gear</strong> icon and use the <strong>M / FT</strong>
+        toggle to switch between metres and feet. The preference is saved automatically
+        and applies to all distance displays across the app.
+      </p>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      How do I delete a device from My Devices?
+      <span class="arrow">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#4F6BFF"
+             stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+    <div class="faq-a">
+      <p>
+        On the main device list, swipe left on the device row and tap the red
+        <strong>Delete</strong> button. You can also remove a device from within its settings
+        screen by tapping <strong>Delete from My Devices</strong>.
+      </p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <h2>Still Need Help?</h2>
+  <p>
+    If your issue is not covered above, please email us and include:
+  </p>
+  <ul>
+    <li>A brief description of the problem and what you expected to happen</li>
+    <li>Your iPhone model and iOS version (<em>Settings → General → About</em>)</li>
+    <li>Your Apple ID email (we never ask for your password)</li>
+    <li>Any screenshots that might help illustrate the issue</li>
+  </ul>
+
+  <div class="contact-card">
+    <div class="contact-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0
+                 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5
+                 8-5v2z"/>
+      </svg>
+    </div>
+    <div class="contact-text">
+      <strong>Email Support</strong>
+      <a href="mailto:vladyslavhasiuk@gmail.com">vladyslavhasiuk@gmail.com</a>
+      <p style="font-size:13px; color:#6e6e73; margin:4px 0 0;">
+        We respond within 1–2 business days.
+      </p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <h2>Legal</h2>
+  <div class="policy-links">
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="terms-of-use.html">Terms of Use</a>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Device Tracker. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function toggle(btn) {
+      var item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
